@@ -40,21 +40,11 @@ void chooseToken() {
     printf("            1.X              \n");
     printf("            2.O         \n\n");
 }
-void playerName() {
-    char nick[10];
-    printf("Enter your nickname: ");
-    scanf_s("%s", &nick, 9);
-    printf("Player: %s\n\n", nick);
-    printf("%s   vs   Computer\n", nick);
-}
-void twoPlayerName() {
-    char nick[10], nickTwo[10];
-    printf("Enter your nickname: ");
-    scanf("%s", nick, 10);
-    printf("Enter your nickname: ");
-    scanf("%s", nickTwo, 10);
-    printf("\n%s     vs     %s\n\n", nick, nickTwo);
-}
+void getPlayerName(char nick[30]) {
+
+    fgets(nick, 30, stdin);
+
+}               
 
 void printBoard(char board[3][3]) {
 
@@ -267,26 +257,71 @@ int checkIfOutside(int x, int y) {
 }
 void pVp()
 {
-    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} }, choice;
     char player_sign = 'X';
-    twoPlayerName();
-    chooseToken();
 
-    clock_t start = clock();
-    int move = 0;
-    while (checkWinner(board) == ' ') {
+    printf("Enter name: ");
+    char FirstPlayerName[30];
+    getPlayerName(FirstPlayerName);
+    printf("Enter name: ");
+    char SecondPlayerName[30];
+    getPlayerName(SecondPlayerName);
+
+    printf("         %s", FirstPlayerName);
+    printf("            vs \n");
+    printf("         %s\n", SecondPlayerName);
+
+    chooseToken();
+    choice = _getch();
+    if (choice == '1')
+    {
+        clock_t start = clock();
+        int move = 0;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (move % 2 == 0)
+                printf("%s", FirstPlayerName);
+            else
+                printf("%s", SecondPlayerName);
+
+            selectPoint(board, player_sign);
+            system("cls");
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
         printBoard(board);
-        selectPoint(board, player_sign);
-        system("cls");
-        if (player_sign == 'X')
-            player_sign = 'O';
-        else
-            player_sign = 'X';
-        move++;
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
     }
-    printBoard(board);
-    printf("Number of moves %d\n", move);
-    offTimmer(start);
+    else if (choice == '2')
+    {
+        clock_t start = clock();
+        int move = 0;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (move % 2 == 0)
+                printf("%s", SecondPlayerName);
+            else
+                printf("%s", FirstPlayerName);
+
+            selectPoint(board, player_sign);
+            system("cls");
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
+        printBoard(board);
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
+    }
+    
 
 }
 void cVc()
@@ -313,10 +348,10 @@ void cVc()
                 player_sign = 'O';
             else
                 player_sign = 'X';
-                move++;
+            move++;
         }
         printBoard(board);
-        printf("Number of moves %d\n",move);
+        printf("Number of moves %d\n", move);
         offTimmer(start);
 
     }
@@ -335,7 +370,7 @@ void cVc()
                 player_sign = 'O';
             else
                 player_sign = 'X';
-                move++;
+            move++;
         }
         printBoard(board);
         printf("Number of moves %d\n", move);
@@ -345,11 +380,6 @@ void cVc()
 void pVc()
 {
     char choice;
-
-    compLevel();
-    choice = _getch();
-    system("cls");
-    playerName();
     int comp_level = 1;
     char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
     char player_sign = 'X';
@@ -357,22 +387,68 @@ void pVc()
     clock_t start = clock();
 
     int move = 0;
-    while (checkWinner(board) == ' ') {
-        printBoard(board);
 
-        if (player_sign == 'X')
-            selectPoint(board, player_sign);
-        else
-            computerMove(board, comp_level, player_sign);
-        if (player_sign == 'X')
-            player_sign = 'O';
-        else
-            player_sign = 'X';
+    compLevel();
+    choice = _getch();
+    system("cls");
+
+    printf("Enter name: ");
+    char FirstPlayerName[30];
+    getPlayerName(FirstPlayerName);
+    printf("%s", FirstPlayerName);
+
+    chooseToken();
+    choice = _getch();
+    if (choice == '1')
+    {
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (player_sign == 'X')
+            {
+                printf("MOVE: %s\n", FirstPlayerName);
+                selectPoint(board, player_sign);
+            }
+            else
+            {
+                printf("Computer move\n");
+                computerMove(board, comp_level, player_sign);
+            }
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
             move++;
+        }
+        printBoard(board);
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
     }
-    printBoard(board);
-    printf("Number of moves %d\n", move);
-    offTimmer(start);
+    else if (choice == '2')
+    {
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (player_sign == 'X')
+            {
+                printf("Computer move\n");
+                computerMove(board, comp_level, player_sign);
+            }
+            else
+            {
+                printf("MOVE: %s\n", FirstPlayerName);
+                selectPoint(board, player_sign);
+            }
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
+        printBoard(board);
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
+    }      
 }
 
 void offTimmer(clock_t start)
