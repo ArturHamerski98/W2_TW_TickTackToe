@@ -40,14 +40,6 @@ void chooseToken() {
     printf("            1.X              \n");
     printf("            2.O         \n\n");
 }
-char getTokenX()
-{
-    return 'X';
-}
-char getTokenO()
-{
-    return 'O';
-}
 void getPlayerName(char nick[30]) {
 
     fgets(nick, 30, stdin);
@@ -275,33 +267,61 @@ void pVp()
     char SecondPlayerName[30];
     getPlayerName(SecondPlayerName);
 
-    printf("%s", FirstPlayerName);
-    printf("vs\n");
-    printf("%s", SecondPlayerName);
-    printf("%s", FirstPlayerName);
+    printf("         %s", FirstPlayerName);
+    printf("            vs \n");
+    printf("         %s\n", SecondPlayerName);
 
     chooseToken();
     choice = _getch();
     if (choice == '1')
-        getTokenX();
-    else if (choice == '2')
-        getTokenO();
+    {
+        clock_t start = clock();
+        int move = 0;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
 
-    clock_t start = clock();
-    int move = 0;
-    while (checkWinner(board) == ' ') {
+            if (move % 2 == 0)
+                printf("%s", FirstPlayerName);
+            else
+                printf("%s", SecondPlayerName);
+
+            selectPoint(board, player_sign);
+            system("cls");
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
         printBoard(board);
-        selectPoint(board, player_sign);
-        system("cls");
-        if (player_sign == 'X')
-            player_sign = 'O';
-        else
-            player_sign = 'X';
-        move++;
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
     }
-    printBoard(board);
-    printf("Number of moves %d\n", move);
-    offTimmer(start);
+    else if (choice == '2')
+    {
+        clock_t start = clock();
+        int move = 0;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (move % 2 == 0)
+                printf("%s", SecondPlayerName);
+            else
+                printf("%s", FirstPlayerName);
+
+            selectPoint(board, player_sign);
+            system("cls");
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
+        printBoard(board);
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
+    }
+    
 
 }
 void cVc()
@@ -360,6 +380,13 @@ void cVc()
 void pVc()
 {
     char choice;
+    int comp_level = 1;
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+
+    clock_t start = clock();
+
+    int move = 0;
 
     compLevel();
     choice = _getch();
@@ -368,37 +395,60 @@ void pVc()
     printf("Enter name: ");
     char FirstPlayerName[30];
     getPlayerName(FirstPlayerName);
+    printf("%s", FirstPlayerName);
 
     chooseToken();
     choice = _getch();
     if (choice == '1')
-        getTokenX();
-    else if (choice == '2')
-        getTokenO();
+    {
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
 
-    int comp_level = 1;
-    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
-    char player_sign = 'X';
-
-    clock_t start = clock();
-
-    int move = 0;
-    while (checkWinner(board) == ' ') {
+            if (player_sign == 'X')
+            {
+                printf("MOVE: %s\n", FirstPlayerName);
+                selectPoint(board, player_sign);
+            }
+            else
+            {
+                printf("Computer move\n");
+                computerMove(board, comp_level, player_sign);
+            }
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
         printBoard(board);
-
-        if (player_sign == 'X')
-            selectPoint(board, player_sign);
-        else
-            computerMove(board, comp_level, player_sign);
-        if (player_sign == 'X')
-            player_sign = 'O';
-        else
-            player_sign = 'X';
-        move++;
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
     }
-    printBoard(board);
-    printf("Number of moves %d\n", move);
-    offTimmer(start);
+    else if (choice == '2')
+    {
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+
+            if (player_sign == 'X')
+            {
+                printf("Computer move\n");
+                computerMove(board, comp_level, player_sign);
+            }
+            else
+            {
+                printf("MOVE: %s\n", FirstPlayerName);
+                selectPoint(board, player_sign);
+            }
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+            move++;
+        }
+        printBoard(board);
+        printf("Number of moves %d\n", move);
+        offTimmer(start);
+    }      
 }
 
 void offTimmer(clock_t start)
