@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <conio.h>
-#include <Windows.h>
 #include "tictac.h"
 
 #pragma warning(disable: 4996)
@@ -275,6 +272,8 @@ void pVp()
     twoPlayerName();
     chooseToken();
 
+    clock_t start = clock();
+   
     while (checkWinner(board) == ' ') {
         printBoard(board);
         selectPoint(board, player_sign);
@@ -286,6 +285,8 @@ void pVp()
 
     }
     printBoard(board);
+    offTimmer(start);
+
 }
 void cVc()
 {
@@ -301,6 +302,9 @@ void cVc()
         char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
         char player_sign = 'X';
         int comp_level = 0;
+
+        clock_t start = clock();
+
         while (checkWinner(board) == ' ') {
             printBoard(board);
             computerMove(board, comp_level, player_sign);
@@ -311,12 +315,17 @@ void cVc()
 
         }
         printBoard(board);
+        offTimmer(start);
+
     }
     else if (choice == '2')
     {
         char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
         char player_sign = 'X';
         int comp_level = 1;
+
+        clock_t start = clock();
+
         while (checkWinner(board) == ' ') {
             printBoard(board);
             computerMove(board, comp_level, player_sign);
@@ -327,7 +336,7 @@ void cVc()
 
         }
         printBoard(board);
-
+        offTimmer(start);
     }
 }
 void pVc()
@@ -341,8 +350,12 @@ void pVc()
     int comp_level = 1;
     char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
     char player_sign = 'X';
+
+    clock_t start = clock();
+
     while (checkWinner(board) == ' ') {
         printBoard(board);
+
         if (player_sign == 'X')
             selectPoint(board, player_sign);
         else
@@ -354,5 +367,13 @@ void pVc()
 
     }
     printBoard(board);
+    offTimmer(start);
+}
 
+void offTimmer(clock_t start)
+{
+    clock_t end = clock();
+    clock_t time = end - start;
+    double time_in_sec = ((double)time) / CLOCKS_PER_SEC; // calculate the elapsed time
+    printf("Time of the game: %f seconds\n", time_in_sec);
 }
