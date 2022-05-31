@@ -52,14 +52,7 @@ void getPlayerName(char nick[30]) {
 
     fgets(nick, 30, stdin);
 
-}       
-const char* getSecondPlayerName() {
-
-    char nickTwo[10];
-    scanf("%s", nickTwo, 9);      // to tez nie dziala jak powinno
-   
-    return nickTwo;
-}         
+}               
 
 void printBoard(char board[3][3]) {
 
