@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <Windows.h>
-#include "tickTack.h"
+#include "tictac.h"
 
 #pragma warning(disable: 4996)
 
@@ -47,17 +47,16 @@ void playerName() {
     char nick[10];
     printf("Enter your nickname: ");
     scanf_s("%s", &nick, 9);
-    printf("Player: %s\n", nick);
-    printf("Player: %s", nick);
+    printf("Player: %s\n\n", nick);
+    printf("%s   vs   Computer\n", nick);
 }
 void twoPlayerName() {
     char nick[10], nickTwo[10];
     printf("Enter your nickname: ");
-    fgets(nick, 10, stdin);
+    scanf("%s", nick, 10);
     printf("Enter your nickname: ");
-    fgets(nickTwo, 10, stdin);
-    printf("\nPlayer 1: %s", nick);
-    printf("Player 2: %s\n\n", nickTwo);
+    scanf("%s", nickTwo, 10);
+    printf("\n%s     vs     %s\n\n", nick, nickTwo);
 }
 
 void printBoard(char board[3][3]) {
@@ -78,7 +77,7 @@ void printBoard(char board[3][3]) {
 
 void selectPoint(char board[3][3], char player_sign) {
     char x0[100];
-    int y0[100]; ///nie czajê, czemu tu char a tu int????
+    int y0[100]; ///nie czajÃª, czemu tu char a tu int????
     printf("Enter row #(1-3): ");
     scanf("%s", &x0);
 
@@ -268,4 +267,92 @@ int checkIfOutside(int x, int y) {
         outside = 1;
     }
     return outside;
+}
+void pVp()
+{
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+    twoPlayerName();
+    chooseToken();
+
+    while (checkWinner(board) == ' ') {
+        printBoard(board);
+        selectPoint(board, player_sign);
+        system("cls");
+        if (player_sign == 'X')
+            player_sign = 'O';
+        else
+            player_sign = 'X';
+
+    }
+    printBoard(board);
+}
+void cVc()
+{
+    char choice;
+
+    compLevel();
+    srand(time(0));
+    choice = _getch();
+    system("cls");
+
+    if (choice == '1')
+    {
+        char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+        char player_sign = 'X';
+        int comp_level = 0;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+            computerMove(board, comp_level, player_sign);
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+
+        }
+        printBoard(board);
+    }
+    else if (choice == '2')
+    {
+        char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+        char player_sign = 'X';
+        int comp_level = 1;
+        while (checkWinner(board) == ' ') {
+            printBoard(board);
+            computerMove(board, comp_level, player_sign);
+            if (player_sign == 'X')
+                player_sign = 'O';
+            else
+                player_sign = 'X';
+
+        }
+        printBoard(board);
+
+    }
+}
+void pVc()
+{
+    char choice;
+
+    compLevel();
+    choice = _getch();
+    system("cls");
+    playerName();
+    int comp_level = 1;
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+    while (checkWinner(board) == ' ') {
+        printBoard(board);
+        if (player_sign == 'X')
+            selectPoint(board, player_sign);
+        else
+            computerMove(board, comp_level, player_sign);
+        if (player_sign == 'X')
+            player_sign = 'O';
+        else
+            player_sign = 'X';
+
+    }
+    printBoard(board);
+
 }
