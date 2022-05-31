@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <conio.h>
+#include <Windows.h>
+#include <time.h>
+
 void menu();
 void modeChoose();
 void playAgain();
@@ -16,3 +21,4 @@ void computerMove(char board[3][3], int comp_level, char player_sign);
 void pVp();
 void cVc();
 void pVc();
+void offTimmer(clock_t start);
