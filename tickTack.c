@@ -273,7 +273,7 @@ void pVp()
     chooseToken();
 
     clock_t start = clock();
-   
+    int move = 0;
     while (checkWinner(board) == ' ') {
         printBoard(board);
         selectPoint(board, player_sign);
@@ -282,9 +282,10 @@ void pVp()
             player_sign = 'O';
         else
             player_sign = 'X';
-
+        move++;
     }
     printBoard(board);
+    printf("Number of moves %d\n", move);
     offTimmer(start);
 
 }
@@ -304,7 +305,7 @@ void cVc()
         int comp_level = 0;
 
         clock_t start = clock();
-
+        int move = 0;
         while (checkWinner(board) == ' ') {
             printBoard(board);
             computerMove(board, comp_level, player_sign);
@@ -312,9 +313,10 @@ void cVc()
                 player_sign = 'O';
             else
                 player_sign = 'X';
-
+                move++;
         }
         printBoard(board);
+        printf("Number of moves %d\n",move);
         offTimmer(start);
 
     }
@@ -325,7 +327,7 @@ void cVc()
         int comp_level = 1;
 
         clock_t start = clock();
-
+        int move = 0;
         while (checkWinner(board) == ' ') {
             printBoard(board);
             computerMove(board, comp_level, player_sign);
@@ -333,9 +335,10 @@ void cVc()
                 player_sign = 'O';
             else
                 player_sign = 'X';
-
+                move++;
         }
         printBoard(board);
+        printf("Number of moves %d\n", move);
         offTimmer(start);
     }
 }
@@ -353,6 +356,7 @@ void pVc()
 
     clock_t start = clock();
 
+    int move = 0;
     while (checkWinner(board) == ' ') {
         printBoard(board);
 
@@ -364,9 +368,10 @@ void pVc()
             player_sign = 'O';
         else
             player_sign = 'X';
-
+            move++;
     }
     printBoard(board);
+    printf("Number of moves %d\n", move);
     offTimmer(start);
 }
 
