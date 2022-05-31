@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "tictac.h"
+#include <time.h>
 
 int main()
 {
@@ -11,7 +12,6 @@ int main()
 		char choice;
 		choice = _getch();
 		system("cls");
-
 		switch (choice)
 		{
 		case '1':
@@ -19,7 +19,7 @@ int main()
 			modeChoose();
 			choice = _getch();
 			system("cls");
-
+		
 			// PLAYER VS PLAYER
 			if (choice == '1')
 			{
