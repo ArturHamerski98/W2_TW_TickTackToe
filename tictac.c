@@ -48,13 +48,11 @@ char getTokenO()
 {
     return 'O';
 }
-const char* getPlayerName() {
+void getPlayerName(char nick[30]) {
 
-    char nick[10];
-    scanf_s("%s", &nick, 9);      //to nie dziala jak powinno
+    fgets(nick, 30, stdin);
 
-    return nick;
-}               
+}       
 const char* getSecondPlayerName() {
 
     char nickTwo[10];
@@ -274,21 +272,25 @@ int checkIfOutside(int x, int y) {
 }
 void pVp()
 {
-    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} }, choice;
     char player_sign = 'X';
-    char choice;
 
     printf("Enter name: ");
-    getPlayerName();
-    printf("Enter name: ");                 //wpisywanie nicku (nie dziala)
-    getSecondPlayerName();
-    printf("%s", getPlayerName());
-    printf("%s", getSecondPlayerName());
+    char FirstPlayerName[30];
+    getPlayerName(FirstPlayerName);
+    printf("Enter name: ");
+    char SecondPlayerName[30];
+    getPlayerName(SecondPlayerName);
+
+    printf("%s", FirstPlayerName);
+    printf("vs\n");
+    printf("%s", SecondPlayerName);
+    printf("%s", FirstPlayerName);
 
     chooseToken();
     choice = _getch();
     if (choice == '1')
-        getTokenX();                    //wybor tego tokena
+        getTokenX();
     else if (choice == '2')
         getTokenO();
 
@@ -365,14 +367,14 @@ void cVc()
 void pVc()
 {
     char choice;
-    const char* name;
 
     compLevel();
     choice = _getch();
     system("cls");
-    getPlayerName();
-    name = getPlayerName();
-    printf("Player: %s", name);
+
+    printf("Enter name: ");
+    char FirstPlayerName[30];
+    getPlayerName(FirstPlayerName);
 
     chooseToken();
     choice = _getch();
