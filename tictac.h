@@ -10,8 +10,6 @@ void compLevel();
 void chooseToken();
 void getPlayerName(char nick[30]);
 void printBoard(char board[3][3]);
-char getTokenX();
-char getTokenO();
 int  isNumber(char number[]);
 char checkWinner(char board[3][3]);
 char checkHypoteticWinner(char board[3][3], int x, int y, char player_sign);
