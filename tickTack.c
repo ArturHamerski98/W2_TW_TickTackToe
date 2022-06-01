@@ -47,17 +47,16 @@ void playerName() {
     char nick[10];
     printf("Enter your nickname: ");
     scanf_s("%s", &nick, 9);
-    printf("Player: %s\n", nick);
-    printf("Player: %s", nick);
+    printf("Player: %s\n\n", nick);
+    printf("%s   vs   Computer\n", nick);
 }
 void twoPlayerName() {
     char nick[10], nickTwo[10];
     printf("Enter your nickname: ");
-    fgets(nick, 10, stdin);
+    scanf("%s", nick, 10);
     printf("Enter your nickname: ");
-    fgets(nickTwo, 10, stdin);
-    printf("\nPlayer 1: %s", nick);
-    printf("Player 2: %s\n\n", nickTwo);
+    scanf("%s", nickTwo, 10);
+    printf("\n%s     vs     %s\n\n", nick, nickTwo);
 }
 
 void printBoard(char board[3][3]) {
@@ -78,7 +77,7 @@ void printBoard(char board[3][3]) {
 
 void selectPoint(char board[3][3], char player_sign) {
     char x0[100];
-    int y0[100]; ///nie czajê, czemu tu char a tu int????
+    char y0[100];
     printf("Enter row #(1-3): ");
     scanf("%s", &x0);
 
@@ -88,10 +87,17 @@ void selectPoint(char board[3][3], char player_sign) {
     int x = isNumber(x0);
     int y = isNumber(y0);
 
+    if (x == -1 || y == -1) {
+        printf("Invalid input!\n");
+        selectPoint(board, player_sign);
+    }
+
+
+
     int CHECKIFOUTSIDE = checkIfOutside((x), (y));
     int CHECKIFOCCUPIED = 0;
-    if (CHECKIFOUTSIDE == 0)
-        CHECKIFOCCUPIED = checkIfOccupied((x - 1), (y - 1), board);
+    if (checkIfOutside((x), (y)) == 0)
+        CHECKIFOCCUPIED = userCheckIfOccupied((x - 1), (y - 1), board);
 
     if (CHECKIFOCCUPIED == 0 && CHECKIFOUTSIDE == 0) {
         x--;
@@ -103,21 +109,18 @@ void selectPoint(char board[3][3], char player_sign) {
 
 }
 
-int isNumber(char number[]) {
+int isNumber(char number[]) { // returning -1 in case there is an invalid input
     int i = 0;
 
     //checking for negative numbers
-    if (number[0] == '-') {
-        printf("Invalid input!");
-        exit(1);
-    }
+    if (number[0] == '-')
+        return -1;
+
+
 
     for (; number[i] != 0; i++) {
-        if (number[i] > '9' || number[i] < '0') {
-
-            printf("Invalid input!");
-            exit(1);
-        }
+        if (number[i] > '9' || number[i] < '0')
+            return -1;
     }
     int x = atoi(number);
     return x;
@@ -184,7 +187,7 @@ char checkHypoteticWinner(char board[3][3], int x, int y, char player_sign) {
 }
 
 void computerMove(char board[3][3], int comp_level, char player_sign) {
-    if (comp_level == 0) {
+    if (comp_level == 1) {
 
         int x = rand() % 3;
         int y = rand() % 3;
@@ -198,7 +201,7 @@ void computerMove(char board[3][3], int comp_level, char player_sign) {
         else
             computerMove(board, comp_level, player_sign);
     }
-    if (comp_level == 1) {
+    if (comp_level == 2) {
         int x;
         int y;
         int status = 0;
@@ -256,7 +259,15 @@ int checkIfOccupied(int x, int y, char board[3][3]) {
     int occupied = 0;
 
     if (board[x][y] != ' ') {
-        //printf("Invalid move! The entered coordinates pointing to an already occupied spot!\n");
+        occupied = 1;
+    }
+    return occupied;
+}
+int userCheckIfOccupied(int x, int y, char board[3][3]) {
+    int occupied = 0;
+
+    if (board[x][y] != ' ') {
+        printf("Invalid move! The entered coordinates pointing to an already occupied spot!\n");
         occupied = 1;
     }
     return occupied;
@@ -268,4 +279,108 @@ int checkIfOutside(int x, int y) {
         outside = 1;
     }
     return outside;
+}
+void pVp()
+{
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+
+    printf("Enter name: ");
+    char FirstPlayerName[30];
+    getPlayerName(FirstPlayerName);
+    printf("Enter name: ");
+    char SecondPlayerName[30];
+    getPlayerName(SecondPlayerName);
+  
+    printf("%s", FirstPlayerName);
+    printf("%s", SecondPlayerName);
+    chooseToken();
+
+    clock_t start = clock();
+    int move = 0;
+    while (checkWinner(board) == ' ') {
+        printBoard(board);
+        selectPoint(board, player_sign);
+        system("cls");
+        if (player_sign == 'X')
+            player_sign = 'O';
+        else
+            player_sign = 'X';
+        move++;
+    }
+    printBoard(board);
+    printf("Number of moves %d\n", move);
+    //offTimmer(start);
+
+}
+void cVc()
+{
+    srand(time(0));
+    
+    int comp1lvl;
+    int comp2lvl;
+
+    compLevel();
+    scanf("%d", &comp1lvl);
+    compLevel();
+    scanf("%d", &comp2lvl);
+    system("cls");
+
+   
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+    int comp_level = comp1lvl;
+    while (checkWinner(board) == ' ') {
+        printBoard(board);
+        computerMove(board, comp_level, player_sign);
+        if (player_sign == 'X')
+            player_sign = 'O';
+        else
+            player_sign = 'X';
+        
+        if (comp_level == comp1lvl)
+            comp_level = comp2lvl;
+        else
+            comp_level = comp1lvl;
+
+    }
+    printBoard(board);
+    
+   
+}
+void pVc()
+{
+    char choice;
+    int comp1lvl;
+
+    compLevel();
+    scanf("%d", &comp1lvl);
+  
+    system("cls");
+    playerName();
+    int comp_level = comp1lvl;
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ',' ',' '} };
+    char player_sign = 'X';
+    while (checkWinner(board) == ' ') {
+        printBoard(board);
+        if (player_sign == 'X')
+            selectPoint(board, player_sign);
+        else
+            computerMove(board, comp_level, player_sign);
+        if (player_sign == 'X')
+            player_sign = 'O';
+        else
+            player_sign = 'X';
+
+    }
+    printBoard(board);
+
+}
+
+void getPlayerName(char nick [30]) {
+  
+    fgets(nick, 30, stdin);
+  
+
+  
 }
