@@ -294,6 +294,8 @@ void pVp()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -318,6 +320,8 @@ void pVp()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -351,6 +355,8 @@ void cVc()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
 
@@ -373,6 +379,8 @@ void cVc()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -421,6 +429,8 @@ void pVc()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -446,6 +456,8 @@ void pVc()
             move++;
         }
         printBoard(board);
+        if (move == 9)
+            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }      
