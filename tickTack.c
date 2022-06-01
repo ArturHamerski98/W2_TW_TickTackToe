@@ -296,6 +296,11 @@ void pVp()
         printBoard(board);
         if (move == 9)
             printf("DRAW!\n");
+        if (move % 2 == 0)
+            printf("WINNER: %s\n", SecondPlayerName);
+        else
+            printf("WINNER: %s\n", FirstPlayerName);
+
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -322,10 +327,14 @@ void pVp()
         printBoard(board);
         if (move == 9)
             printf("DRAW!\n");
+        if (move % 2 == 0)
+            printf("WINNER: %s\n", FirstPlayerName);
+        else
+            printf("WINNER!: %s\n", SecondPlayerName);
+
         printf("Number of moves %d\n", move);
         offTimmer(start);
-    }
-    
+    }  
 
 }
 void cVc()
@@ -355,8 +364,6 @@ void cVc()
             move++;
         }
         printBoard(board);
-        if (move == 9)
-            printf("DRAW!\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
 
@@ -431,6 +438,10 @@ void pVc()
         printBoard(board);
         if (move == 9)
             printf("DRAW!\n");
+        if (move % 2 == 0)
+            printf("WINNER: Computer\n");
+        else
+            printf("WINNER: %s\n", FirstPlayerName);
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -458,6 +469,10 @@ void pVc()
         printBoard(board);
         if (move == 9)
             printf("DRAW!\n");
+        if (move % 2 == 0)
+            printf("WINNER: %s\n", FirstPlayerName);
+        else
+            printf("WINNER: Computer\n");
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }      
