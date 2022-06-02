@@ -48,9 +48,9 @@ void chooseToken() {
 }
 void getPlayerName(char nick[30]) {
 
-    fgets(nick, 30, stdin);
-    //strcpy(nick, name);
-
+    
+    scanf("%s", nick);
+   
 }
 
 void printBoard(char board[3][3]) {
@@ -72,7 +72,7 @@ void printBoard(char board[3][3]) {
 void selectPoint(char board[3][3], char player_sign) {
     char x0[100];
     char y0[100];
-    printf("Enter row #(1-3): ");
+    printf("\nEnter row #(1-3): ");
     scanf("%s", &x0);
 
     printf("Enter column #(1-3): ");
@@ -271,23 +271,9 @@ int checkIfOutside(int x, int y) {
     return outside;
 }
 void pVp() {
-    char board[3][3] = {
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      }
-    };
+    char board[3][3] = { {' ', ' ', ' '},
+                         {' ', ' ', ' '}, 
+                         {' ', ' ', ' '} };
     char choice;
     char player_sign = 'X';
 
@@ -298,8 +284,8 @@ void pVp() {
     char SecondPlayerName[30];
     getPlayerName(SecondPlayerName);
 
-    printf("         %s", FirstPlayerName);
-    printf("            vs \n");
+    printf("         %s\n", FirstPlayerName);
+    printf("          vs \n");
     printf("         %s\n", SecondPlayerName);
 
     chooseToken();
@@ -324,9 +310,9 @@ void pVp() {
             move++;
         }
         printBoard(board);
-        if ((move == 9) && (checkWinner==' '))
+        if (checkWinner(board) ==' ')
             printf("DRAW!\n");
-        if (move % 2 == 0)
+        else if (move % 2 == 0)
             printf("WINNER: %s\n", SecondPlayerName);
         else
             printf("WINNER: %s\n", FirstPlayerName);
@@ -354,9 +340,9 @@ void pVp() {
             move++;
         }
         printBoard(board);
-        if ((move == 9) && (checkWinner == ' '))
+        if (checkWinner(board) == ' ')
             printf("DRAW!\n");
-        if (move % 2 == 0)
+        else if (move % 2 == 0)
             printf("WINNER: %s\n", FirstPlayerName);
         else
             printf("WINNER!: %s\n", SecondPlayerName);
@@ -378,23 +364,9 @@ void cVc() {
     scanf("%d", &comp2lvl);
     system("cls");
 
-    char board[3][3] = {
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      }
-    };
+    char board[3][3] = { {' ', ' ', ' '},
+                         {' ', ' ', ' '},
+                         {' ', ' ', ' '} };
     char player_sign = 'X';
     int comp_level = comp1lvl;
     clock_t start = clock();
@@ -415,8 +387,13 @@ void cVc() {
 
     }
     printBoard(board);
-    if ((move == 9) && (checkWinner == ' '))
+    if (checkWinner(board) == ' ')
         printf("DRAW!\n");
+    else if (checkWinner(board) == 'X')
+        printf("WINNER: X");
+    else
+        printf("WINNER!: O");
+
     printf("Number of moves %d\n", move);
     offTimmer(start);
 
@@ -425,23 +402,9 @@ void pVc() {
     char choice;
     int comp1lvl;
 
-    char board[3][3] = {
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      },
-      {
-        ' ',
-        ' ',
-        ' '
-      }
-    };
+    char board[3][3] = { {' ', ' ', ' '},
+                         {' ', ' ', ' '},
+                         {' ', ' ', ' '} };
     char player_sign = 'X';
 
     int move = 0;
@@ -476,9 +439,9 @@ void pVc() {
             move++;
         }
         printBoard(board);
-        if ((move == 9) && (checkWinner == ' '))
+        if (checkWinner(board) == ' ')
             printf("DRAW!\n");
-        if (move % 2 == 0)
+        else if (move % 2 == 0)
             printf("WINNER: Computer\n");
         else {
             printf("WINNER: %s\n", FirstPlayerName);
@@ -507,14 +470,15 @@ void pVc() {
             move++;
         }
         printBoard(board);
-        if ((move == 9) && (checkWinner == ' '))
+        if (checkWinner(board) == ' ')
             printf("DRAW!\n");
-        if (move % 2 == 0) {
+        else if (move % 2 == 0) {
             printf("WINNER: %s\n", FirstPlayerName);
             updateProList(move, returnTime(start), FirstPlayerName);
         }
         else
             printf("WINNER: Computer\n");
+
         printf("Number of moves %d\n", move);
         offTimmer(start);
     }
@@ -619,7 +583,6 @@ void printHallOfFame() {
 
     while (!feof(fptr)) {
         fgets(singleLine, 150, fptr);
-        //printf("**  %s *%d*%d*  ", singleLine, temp, temp2);
         if (temp % 3 == 0)
             pro[temp2].moves = atoi(singleLine);
         else if ((temp - 1) % 3 == 0) {
@@ -655,23 +618,9 @@ struct result AiCheck(int com1, int com2) {
     for (int i = 0; i < 1000; i++) {
         
 
-        char board[3][3] = {
-          {
-            ' ',
-            ' ',
-            ' '
-          },
-          {
-            ' ',
-            ' ',
-            ' '
-          },
-          {
-            ' ',
-            ' ',
-            ' '
-          }
-        };
+        char board[3][3] = { {' ', ' ', ' '},
+                             {' ', ' ', ' '},
+                             {' ', ' ', ' '} };
         char player_sign = 'X';
         int comp_level = comp1lvl;
         int move = 0;
