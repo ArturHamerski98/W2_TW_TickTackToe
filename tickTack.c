@@ -533,7 +533,6 @@ void updateProList(int moves, float time, char* name) {
     pro[5].moves = moves;
     pro[5].time = time;
     strcpy(pro[5].name, name);
-    pro[5].name[strlen(pro[5].name) - 1] = '\0';
 
     sortProList(pro);
 
