@@ -8,9 +8,10 @@ void modeChoose();
 void playAgain();
 void compLevel();
 void chooseToken();
-void getPlayerName(char nick[30]);
+void playerName();
+void twoPlayerName();
 void printBoard(char board[3][3]);
-int  isNumber(char number[]);
+int isNumber(char number[]);
 char checkWinner(char board[3][3]);
 char checkHypoteticWinner(char board[3][3], int x, int y, char player_sign);
 void selectPoint(char board[3][3], char player_sign);
@@ -21,3 +22,20 @@ void pVp();
 void cVc();
 void pVc();
 void offTimmer(clock_t start);
+float returnTime(clock_t start);
+void getPlayerName(char nick[30]);
+void sortProList(struct pros list[5]);
+void updateProList(int moves, float time, char* name);
+void printHallOfFame();
+struct result AiCheck(int comp1, int com2);
+void statsOfAi();
+struct pros {
+	int moves;
+	float time;
+	char* name;
+
+};
+struct result {
+	int win;
+	int lose;
+};
