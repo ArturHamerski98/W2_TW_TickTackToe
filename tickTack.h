@@ -32,10 +32,11 @@ void statsOfAi();
 struct pros {
 	int moves;
 	float time;
-	char* name;
+	char name[30];
 
 };
 struct result {
 	int win;
 	int lose;
 };
+
