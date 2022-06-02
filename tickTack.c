@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "ticTac.h"
+#include <string.h>
 
 #pragma warning(disable: 4996)
 
@@ -48,6 +49,7 @@ void chooseToken() {
 void getPlayerName(char nick[30]) {
 
     fgets(nick, 30, stdin);
+    //strcpy(nick, name);
 
 }
 
@@ -285,7 +287,8 @@ void pVp() {
         ' ',
         ' '
       }
-    }, choice;
+    };
+    char choice;
     char player_sign = 'X';
 
     printf("Enter name: ");
@@ -321,7 +324,7 @@ void pVp() {
             move++;
         }
         printBoard(board);
-        if (move == 9)
+        if ((move == 9) && (checkWinner==' '))
             printf("DRAW!\n");
         if (move % 2 == 0)
             printf("WINNER: %s\n", SecondPlayerName);
@@ -351,7 +354,7 @@ void pVp() {
             move++;
         }
         printBoard(board);
-        if (move == 9)
+        if ((move == 9) && (checkWinner == ' '))
             printf("DRAW!\n");
         if (move % 2 == 0)
             printf("WINNER: %s\n", FirstPlayerName);
@@ -412,7 +415,7 @@ void cVc() {
 
     }
     printBoard(board);
-    if (move > 8)
+    if ((move == 9) && (checkWinner == ' '))
         printf("DRAW!\n");
     printf("Number of moves %d\n", move);
     offTimmer(start);
@@ -473,7 +476,7 @@ void pVc() {
             move++;
         }
         printBoard(board);
-        if (move == 9)
+        if ((move == 9) && (checkWinner == ' '))
             printf("DRAW!\n");
         if (move % 2 == 0)
             printf("WINNER: Computer\n");
@@ -504,7 +507,7 @@ void pVc() {
             move++;
         }
         printBoard(board);
-        if (move == 9)
+        if ((move == 9) && (checkWinner == ' '))
             printf("DRAW!\n");
         if (move % 2 == 0) {
             printf("WINNER: %s\n", FirstPlayerName);
@@ -552,7 +555,7 @@ void updateProList(int moves, float time, char* name) {
 
         }
         else {
-            pro[temp2].name = singleLine;
+            strcpy(pro[temp2].name, singleLine);
             pro[temp2].name[strlen(pro[temp2].name) - 1] = '\0';
             temp2++;
         }
@@ -565,7 +568,7 @@ void updateProList(int moves, float time, char* name) {
 
     pro[5].moves = moves;
     pro[5].time = time;
-    pro[5].name = name;
+    strcpy(pro[5].name, name);
     pro[5].name[strlen(pro[5].name) - 1] = '\0';
 
     sortProList(pro);
@@ -624,7 +627,8 @@ void printHallOfFame() {
 
         }
         else {
-            pro[temp2].name = singleLine;
+            strcpy(pro[temp2].name, singleLine);
+            pro[temp2].name[strlen(pro[temp2].name) - 1] = '\0';
             temp2++;
         }
 
@@ -636,7 +640,7 @@ void printHallOfFame() {
     for (int j = 0; j < 5; j++) {
         printf("%d. Name: %s || Seconds: %f || Moves: %d\n", j + 1, pro[j].name, pro[j].time, pro[j].moves);
     }
-
+  
 }
 
 struct result AiCheck(int com1, int com2) {
@@ -645,9 +649,11 @@ struct result AiCheck(int com1, int com2) {
     results.lose = 0;
     srand(time(0));
     int comp1_wins = 0;
+    
+    int comp1lvl = com1;
+    int comp2lvl = com2;
     for (int i = 0; i < 1000; i++) {
-        int comp1lvl = com1;
-        int comp2lvl = com2;
+        
 
         char board[3][3] = {
           {
